@@ -1,12 +1,15 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
-
+import { NavigationContainer } from '@react-navigation/native';
+import Navigator from './navigation/navigator';
+import { PermissionsProvider } from './context/PermisosContext';
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <Text>RutasApp</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+      <PermissionsProvider>
+        <Navigator />
+      </PermissionsProvider>
+    </NavigationContainer>
   );
 };
 
