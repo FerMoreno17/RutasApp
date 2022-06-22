@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useEffect, useState } from 'react';
 import { AppState, Platform } from 'react-native';
-import { check, PERMISSIONS, PermissionStatus, request } from 'react-native-permissions';
+import { check, openSettings, PERMISSIONS, PermissionStatus, request } from 'react-native-permissions';
 
 export interface PermissionsState {
     //aca van todos los permisos que necesitemos para la app
@@ -25,8 +25,9 @@ export const PermissionsProvider = ({ children }: any) => {
     let respuesta: PermissionStatus;
 
     useEffect(() => {
+        checkLocationPermission();
         AppState.addEventListener('change', state => {
-            if (state !== 'active') {return;}
+            if (state !== 'active') { return; }
             checkLocationPermission();
         });
     }, []);
@@ -38,6 +39,10 @@ export const PermissionsProvider = ({ children }: any) => {
         if (Platform.OS === 'android') {
             respuesta = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
         }
+        if (respuesta === 'blocked') {
+            openSettings();
+        }
+
         setPermissions({ ...permissions, locationStatus: respuesta });
     };
 

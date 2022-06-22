@@ -16,6 +16,7 @@ export default function Navigator() {
   return (
     <Stack.Navigator
       initialRouteName="PermisosScreen"
+      screenOptions={{ headerShown: false }}
     >
       {
         permissions.locationStatus === 'granted'
